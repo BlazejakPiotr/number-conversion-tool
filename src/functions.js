@@ -64,5 +64,26 @@ export const numToWords = (num) => {
         numString[1] === "0" ? "and" : ""
       } ${numToWords(parseInt(numString[1] + numString[2] + numString[3]))}`;
   }
-  // 1000000 -
+  // 10000 - 99999
+  if (numString.length === 5) {
+    if (
+      numString[1] === "0" &&
+      numString[2] === "0" &&
+      numString[3] === "0" &&
+      numString[4] === "0"
+    )
+      return `${numToWords(parseInt(numString[0] + numString[1]))} ${bigs[1]}`;
+    else
+      return `${numToWords(parseInt(numString[0] + numString[1]))} ${
+        bigs[1]
+      } ${numToWords(parseInt(numString[2] + numString[3] + numString[4]))} 
+      `;
+  }
+  // 100000 - 999999
+  if (numString.length === 6) {
+    let rest = numString.slice(2, 5);
+    return `${numToWords(
+      parseInt(numString[0] + numString[1] + numString[2])
+    )}  ${bigs[1]} ${parseInt(rest) > 0 ? numToWords(parseInt(rest)) : ""}`;
+  }
 };

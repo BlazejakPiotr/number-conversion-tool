@@ -32,22 +32,37 @@ const tens = [
   "eighty",
   "ninety",
 ];
-const thousands = [
-  "",
-  "",
-  "hundred",
-  "thousand",
-  "million",
-  "billion",
-  "trillion",
-];
+const bigs = ["hundred", "thousand", "million", "billion", "trillion"];
 
 export const numToWords = (num) => {
-  if (num < 0) throw new Error("Negative numbers are not supported");
+  const numString = num.toString();
+
   if (num === 0) return "zero";
   if (num < 20) return ones[num];
-  if (num.length === 2) {
-    let reminder = num % 10;
-    return reminder ? tens[num[0]] + "-" + ones[num[1]] : tens[num[0]];
+  if (numString.length === 2) {
+    return numString[1] === "0"
+      ? tens[numString[0]]
+      : tens[numString[0]] + "-" + ones[numString[1]];
   }
+
+  // 100 - 999
+  if (numString.length === 3) {
+    if (numString[1] === "0" && numString[2] === "0")
+      return `${ones[numString[0]]} ${bigs[0]}`;
+    else
+      return `${ones[numString[0]]} ${bigs[0]} and ${numToWords(
+        parseInt(numString[1] + numString[2])
+      )} `;
+  }
+
+  // 1000 - 9999
+  if (numString.length === 4) {
+    if (numString[1] === "0" && numString[2] === "0" && numString[3] === "0")
+      return `${ones[numString[0]]} ${bigs[1]}`;
+    else
+      return `${ones[numString[0]]} ${bigs[1]} ${
+        numString[1] === "0" ? "and" : ""
+      } ${numToWords(parseInt(numString[1] + numString[2] + numString[3]))}`;
+  }
+  // 1000000 -
 };

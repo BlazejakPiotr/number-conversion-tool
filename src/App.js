@@ -1,34 +1,66 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <Container>
-        <Row className="d-flex justify-content-center mt-5">
-          <Col md={12} lg={6}>
-            <h1>Number conversion tool</h1>
+  const [number, setNumber] = useState();
+  const [words, setWords] = useState();
 
-            <Form className="mt-5">
+  const handleChange = (e) => {
+    setNumber(parseInt(e.target.value));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div>
+      <Container>
+        <Row className="App d-flex justify-content-center">
+          <Col md={12} lg={6}>
+            <h1 className="text-center mb-5">Number conversion tool</h1>
+
+            <Form onSubmit={handleSubmit}>
               <Form.Group
                 className="mb-3"
                 controlId="number"
                 className="text-start"
               >
-                <div className="d-flex justify-content-evenly">
-                  <div className="w-75">
-                    <Form.Label>Enter a number to convert</Form.Label>
-                    <Form.Control type="number" placeholder="Enter number" />
-                  </div>
-                  <div className="d-flex align-items-end">
-                    <Button variant="danger" className="text-white">
+                <div
+                  className="d-flex justify-content-between"
+                  style={{ gap: "12px" }}
+                >
+                  <Col xs={8} sm={9}>
+                    <Form.Label>Enter a number:</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="1505"
+                      value={number}
+                      onChange={handleChange}
+                    />
+                  </Col>
+                  <Col className="d-flex justify-content-end align-items-end">
+                    <Button
+                      type="submit"
+                      variant="danger"
+                      className="text-white w-100"
+                    >
                       Convert
                     </Button>
-                  </div>
+                  </Col>
                 </div>
               </Form.Group>
             </Form>
+            <div className="text-start mt-5" style={{ minHeight: "75px" }}>
+              {words && (
+                <>
+                  <p style={{ marginBottom: "8px" }}>Result:</p>
+                  <h4>{words}</h4>
+                </>
+              )}
+            </div>
           </Col>
         </Row>
       </Container>

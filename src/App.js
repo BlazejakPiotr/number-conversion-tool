@@ -2,17 +2,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import "./App.css";
+import { numToWords } from "./functions";
 
 function App() {
-  const [number, setNumber] = useState();
+  const [number, setNumber] = useState("");
   const [words, setWords] = useState();
 
   const handleChange = (e) => {
-    setNumber(parseInt(e.target.value));
+    setNumber(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setWords(numToWords(number));
+    setNumber("");
   };
 
   return (
@@ -36,7 +39,6 @@ function App() {
                     <Form.Label>Enter a number:</Form.Label>
                     <Form.Control
                       type="number"
-                      placeholder="1505"
                       value={number}
                       onChange={handleChange}
                     />
